@@ -14,6 +14,7 @@ RUN set -eux; \
         default-mysql-client \
         unzip \
         zlib1g-dev \
+        locales \
     \
     && docker-php-ext-configure \
         gd --with-jpeg \
@@ -33,6 +34,11 @@ RUN set -eux; \
     \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN locale-gen ja_JP.UTF-8
+ENV LANG ja_JP.UTF-8
+ENV LC_CTYPE ja_JP.UTF-8
+RUN localedef -f UTF-8 -i ja_JP ja_JP.utf8
 
 RUN set -eux; \
     cd /etc/apache2/mods-enabled \
